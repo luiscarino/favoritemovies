@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">"What To Watch "</string>
+    <string name="title_activity_main_discovery">Movies</string>
+    <string name="hello_world">Hello world!</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="action_sort_by">Sort by</string>
+
+    <string name="title_activity_movie_detail">Detail</string>
+    <string name="vote_placeholder">Vote: <b>%s</b></string>
+
+    <string-array name="sort_by_options_array">
+        <item>Highest rated</item>
+        <item>Most popular</item>
+    </string-array>
+
+</resources>

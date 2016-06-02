@@ -25,7 +25,7 @@ dependencies {
     compile project(':volley')
 
     // Dependencies for Dagger 2
-    compile 'com.google.dagger:dagger:2.+'
+    compile 'com.google.dagger:dagger:2.2'
     apt 'com.google.dagger:dagger-compiler:2.0.1'
     compile 'javax.annotation:javax.annotation-api:1.2'
 
@@ -43,6 +43,9 @@ dependencies {
     // Dependencies for the support library
     compile 'com.android.support:recyclerview-v7:+'
     compile 'com.android.support:appcompat-v7:23.0.1'
+
+    compile 'com.facebook.stetho:stetho:1.1.1'
+    compile 'com.facebook.stetho:stetho-okhttp:1.1.1'
 
 
     // Dependencies for local unit tests

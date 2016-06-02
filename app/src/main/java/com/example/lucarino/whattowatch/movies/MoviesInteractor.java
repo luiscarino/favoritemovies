@@ -3,7 +3,6 @@ package com.example.lucarino.whattowatch.movies;
 import android.util.Log;
 
 import com.example.lucarino.whattowatch.data.Movies;
-import com.example.lucarino.whattowatch.data.Result;
 import com.example.lucarino.whattowatch.endpoint.TheMovieDBService;
 
 import java.util.HashMap;
@@ -52,6 +51,8 @@ public class MoviesInteractor implements MoviesContract.Interactor {
             public void onResponse(retrofit.Response<Movies> response, Retrofit retrofit) {
 
                 if (response != null && response.body() != null && response.body().getResults() != null) {
+
+
                     listener.onSuccess(response.body().getResults());
                 }
             }

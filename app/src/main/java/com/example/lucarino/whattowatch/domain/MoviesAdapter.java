@@ -1,7 +1,5 @@
 package com.example.lucarino.whattowatch.domain;
 
-import javax.inject.Inject;
-
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -11,9 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-
 import com.example.lucarino.whattowatch.MoviesApplication;
 import com.example.lucarino.whattowatch.R;
 import com.example.lucarino.whattowatch.data.Movies;
@@ -22,13 +17,14 @@ import com.example.lucarino.whattowatch.movies.MoviesFragment;
 import com.example.lucarino.whattowatch.util.Logger;
 import com.squareup.picasso.Picasso;
 
-import java.io.Serializable;
-import java.math.RoundingMode;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import javax.inject.Inject;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Adapter used to populated the grid of movies shown in the UI {@link MoviesFragment}
@@ -45,9 +41,9 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
 
     static private OnItemClickListener onItemClickListener;
 
-    public MoviesAdapter(Movies movies, OnItemClickListener listener) {
+    public MoviesAdapter(List<Result> movies, OnItemClickListener listener) {
         onItemClickListener = listener;
-        mResultSet = movies.getResults();
+        mResultSet = movies;
         MoviesApplication.getApplicationComponent().inject(this);
 
     }

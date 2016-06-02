@@ -37,7 +37,7 @@ public class MoviesActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 MoviesFragment moviesFragment = (MoviesFragment)getSupportFragmentManager().findFragmentById(R.id.fragment);
                 if(moviesFragment != null && moviesFragment.isVisible()){
-                    moviesFragment.updateSortOrder(position);
+                   // moviesFragment.updateSortOrder(position);
                 }
             }
 

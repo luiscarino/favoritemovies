@@ -1,19 +1,17 @@
 package com.example.lucarino.whattowatch.movies;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.example.lucarino.whattowatch.R;
+import com.example.lucarino.whattowatch.data.FavMoviesContract;
 import com.example.lucarino.whattowatch.data.Movies;
 import com.example.lucarino.whattowatch.data.Result;
 import com.example.lucarino.whattowatch.domain.EndlessScrollListener;
@@ -21,9 +19,8 @@ import com.example.lucarino.whattowatch.domain.MoviesAdapter;
 import com.example.lucarino.whattowatch.moviedetail.MovieDetailActivity;
 import com.example.lucarino.whattowatch.util.SpaceItemDecoration;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -57,7 +54,7 @@ public class MoviesFragment extends Fragment implements MoviesContract.View {
         super.onCreate(savedInstanceState);
 
         // Set up grid adapter with an empty result and a click listener for movie items
-        mAdapter = new MoviesAdapter(new Movies(new ArrayList<Result>()), mItemClickListener);
+       // mAdapter = new MoviesAdapter(new Movies(new ArrayList<Result>()), mItemClickListener);
     }
 
     private boolean firstTime = true;
@@ -100,7 +97,6 @@ public class MoviesFragment extends Fragment implements MoviesContract.View {
 
         // Set up GridLayout
         final int NUM_COLUMNS = 2;
-
         mRecyclerView.setHasFixedSize(true);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), NUM_COLUMNS);
         mRecyclerView.setLayoutManager(gridLayoutManager);
@@ -142,6 +138,35 @@ public class MoviesFragment extends Fragment implements MoviesContract.View {
 
     @Override
     public void addMoviePage(List<Result> movies) {
+
+        // insert data to the db // TODO: this should be done in the interactor, using DI inject the context in the interactor
+        Vector<ContentValues> cVVector = new Vector<>(movies.size());
+        for(Result result : movies) {
+            ContentValues movieValues = new ContentValues();
+
+            movieValues.put(FavMoviesContract.MovieEntry.COLUMN_KEY, result.getId());
+            movieValues.put(FavMoviesContract.MovieEntry.COLUMN_TITLE, result.getTitle());
+            movieValues.put(FavMoviesContract.MovieEntry.COLUMN_OVERVIEW, result.getOverview());
+            movieValues.put(FavMoviesContract.MovieEntry.COLUMN_POPULARITY, result.getPopularity());
+            movieValues.put(FavMoviesContract.MovieEntry.COLUMN_VOTE_AVERAGE, result.getVoteAverage());
+            movieValues.put(FavMoviesContract.MovieEntry.COLUMN_POSTER_PATH, result.getPosterPath());
+            movieValues.put(FavMoviesContract.MovieEntry.COLUMN_VIDEO, result.isVideo());
+            movieValues.put(FavMoviesContract.MovieEntry.COLUMN_RELEASE_DATE, result.getReleaseDate());
+
+            cVVector.add(movieValues);
+        }
+
+        // add to database
+        if ( cVVector.size() > 0 ) {
+            ContentValues[] cvArray = new ContentValues[cVVector.size()];
+            cVVector.toArray(cvArray);
+            getContext().getContentResolver().bulkInsert(FavMoviesContract.MovieEntry.CONTENT_URI, cvArray);
+        }
+
+        if(mAdapter == null) {
+            mAdapter = new MoviesAdapter(movies, mItemClickListener);
+            mRecyclerView.setAdapter(mAdapter);
+        }
         mAdapter.addData(movies);
     }
 

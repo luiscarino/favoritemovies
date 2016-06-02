@@ -24,6 +24,10 @@
             android:label="@string/title_activity_movie_detail"
             android:parentActivityName=".movies.MoviesActivity">
         </activity>
+        
+        <provider
+            android:authorities="com.example.lucarino.whattowatch"
+            android:name=".util.FavMoviesProvider" />
     </application>
 
 </manifest>

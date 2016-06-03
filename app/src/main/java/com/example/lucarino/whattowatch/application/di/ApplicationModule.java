@@ -1,10 +1,10 @@
-package com.example.lucarino.whattowatch.daggermodule;
+package com.example.lucarino.whattowatch.application.di;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.example.lucarino.whattowatch.MoviesApplication;
+import com.example.lucarino.whattowatch.application.MoviesApplication;
 
 import javax.inject.Singleton;
 

@@ -62,11 +62,14 @@ public class Result implements Serializable {
     @Expose
     private int voteCount;
 
-    public Result(int id, String originalTitle, double popularity, String title) {
+    public Result(int id, String originalTitle, double popularity, String title, String posterPath, double voteAverage, String releaseDate) {
         this.id = id;
         this.originalTitle = originalTitle;
         this.popularity = popularity;
         this.title = title;
+        this.posterPath = posterPath;
+        this.voteAverage = voteAverage;
+        this.releaseDate = releaseDate;
     }
 
     /**

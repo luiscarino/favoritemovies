@@ -1,11 +1,11 @@
-package com.example.lucarino.whattowatch;
+package com.example.lucarino.whattowatch.application;
 
 import android.app.Application;
 
-import com.example.lucarino.whattowatch.daggercomponent.ApplicationComponent;
-import com.example.lucarino.whattowatch.daggercomponent.DaggerApplicationComponent;
-import com.example.lucarino.whattowatch.daggermodule.ApplicationModule;
-import com.example.lucarino.whattowatch.daggermodule.MoviesModule;
+import com.example.lucarino.whattowatch.application.di.ApplicationComponent;
+import com.example.lucarino.whattowatch.application.di.ApplicationModule;
+import com.example.lucarino.whattowatch.application.di.DaggerApplicationComponent;
+import com.example.lucarino.whattowatch.application.di.MoviesModule;
 import com.facebook.stetho.Stetho;
 
 /**

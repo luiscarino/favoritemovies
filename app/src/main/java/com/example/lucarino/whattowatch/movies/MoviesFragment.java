@@ -2,6 +2,7 @@ package com.example.lucarino.whattowatch.movies;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -15,9 +16,8 @@ import com.example.lucarino.whattowatch.data.FavMoviesContract;
 import com.example.lucarino.whattowatch.data.Movies;
 import com.example.lucarino.whattowatch.data.Result;
 import com.example.lucarino.whattowatch.domain.EndlessScrollListener;
-import com.example.lucarino.whattowatch.domain.MoviesAdapter;
+import com.example.lucarino.whattowatch.domain.MyListCursorAdapter;
 import com.example.lucarino.whattowatch.moviedetail.MovieDetailActivity;
-import com.example.lucarino.whattowatch.util.SpaceItemDecoration;
 
 import java.util.List;
 import java.util.Vector;
@@ -30,18 +30,13 @@ import butterknife.ButterKnife;
  */
 public class MoviesFragment extends Fragment implements MoviesContract.View {
     // b5c017a3b95c06a7e161e9b9ccd68aeb
-
-
     private MoviesContract.UserActionListener mActionsListener;
-
-    private MoviesAdapter mAdapter;
-
     public static final String KEY_MOVIE_CLIKED = "movie.selected";
-    public static final String KEY_SAVED_INSTANCE_DATA_SET = "movie.data.set";
-
     // Bind layout views
     @Bind(R.id.my_recycler_view)
     RecyclerView mRecyclerView;
+
+    MyListCursorAdapter myListCursorAdapter;
 
 
     public MoviesFragment() {
@@ -100,8 +95,18 @@ public class MoviesFragment extends Fragment implements MoviesContract.View {
         mRecyclerView.setHasFixedSize(true);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), NUM_COLUMNS);
         mRecyclerView.setLayoutManager(gridLayoutManager);
-        mRecyclerView.addItemDecoration(new SpaceItemDecoration(0));
-        mRecyclerView.setAdapter(mAdapter);
+
+        // Test the basic content provider query
+        Cursor weatherCursor = getContext().getContentResolver().query(
+                FavMoviesContract.MovieEntry.CONTENT_URI,
+                null,
+                null,
+                null,
+                null
+        );
+
+        myListCursorAdapter = new MyListCursorAdapter(getContext(), weatherCursor, mItemClickListener);
+        mRecyclerView.setAdapter(myListCursorAdapter);
 
         mRecyclerView.setOnScrollListener(new EndlessScrollListener(gridLayoutManager) {
             @Override
@@ -123,7 +128,7 @@ public class MoviesFragment extends Fragment implements MoviesContract.View {
 
     @Override
     public void showMovies(Movies movies) {
-        mAdapter.replaceData(movies);
+        //mAdapter.replaceData(movies);
     }
 
     @Override
@@ -133,7 +138,7 @@ public class MoviesFragment extends Fragment implements MoviesContract.View {
 
     @Override
     public void updateSortOrder(int orderType) {
-        mAdapter.sortBy(orderType);
+        //mAdapter.sortBy(orderType);
     }
 
     @Override
@@ -163,14 +168,21 @@ public class MoviesFragment extends Fragment implements MoviesContract.View {
             getContext().getContentResolver().bulkInsert(FavMoviesContract.MovieEntry.CONTENT_URI, cvArray);
         }
 
-        if(mAdapter == null) {
-            mAdapter = new MoviesAdapter(movies, mItemClickListener);
-            mRecyclerView.setAdapter(mAdapter);
-        }
-        mAdapter.addData(movies);
+        // Test the basic content provider query
+        Cursor weatherCursor = getContext().getContentResolver().query(
+                FavMoviesContract.MovieEntry.CONTENT_URI,
+                null,
+                null,
+                null,
+                null
+        );
+
+        myListCursorAdapter.changeCursor(weatherCursor);
+
+
     }
 
-    private MoviesAdapter.OnItemClickListener mItemClickListener = new MoviesAdapter.OnItemClickListener() {
+    private MyListCursorAdapter.OnItemClickListener mItemClickListener = new MyListCursorAdapter.OnItemClickListener() {
         @Override
         public void onClick(Result movie) {
             Intent mIntent = new Intent(getContext(), MovieDetailActivity.class);

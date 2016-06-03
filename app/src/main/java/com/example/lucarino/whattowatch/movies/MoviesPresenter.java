@@ -3,15 +3,12 @@ package com.example.lucarino.whattowatch.movies;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.example.lucarino.whattowatch.MoviesApplication;
-import com.example.lucarino.whattowatch.data.Movies;
+import com.example.lucarino.whattowatch.application.MoviesApplication;
 import com.example.lucarino.whattowatch.data.Result;
 
 import java.util.List;
 
 import javax.inject.Inject;
-
-import retrofit.Response;
 
 
 /**

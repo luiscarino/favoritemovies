@@ -3,7 +3,7 @@ package com.example.lucarino.whattowatch.movies;
 import android.util.Log;
 
 import com.example.lucarino.whattowatch.data.Movies;
-import com.example.lucarino.whattowatch.endpoint.TheMovieDBService;
+import com.example.lucarino.whattowatch.service.TheMovieDBService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -64,4 +64,7 @@ public class MoviesInteractor implements MoviesContract.Interactor {
             }
         });
     }
+
+
+
 }

@@ -1,6 +1,6 @@
 package com.example.lucarino.whattowatch.domain;
 
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 /**
@@ -17,10 +17,10 @@ public abstract class EndlessScrollListener extends RecyclerView.OnScrollListene
     private int current_page = 1;
 
 
-    private GridLayoutManager mGridLayoutManager;
+    private LinearLayoutManager mGridLayoutManager;
 
 
-    public EndlessScrollListener(GridLayoutManager gridLayoutManager) {
+    public EndlessScrollListener(LinearLayoutManager gridLayoutManager) {
         this.mGridLayoutManager = gridLayoutManager;
     }
 

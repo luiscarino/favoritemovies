@@ -1,4 +1,4 @@
-package com.example.lucarino.whattowatch.endpoint;
+package com.example.lucarino.whattowatch.service;
 
 import java.util.Map;
 

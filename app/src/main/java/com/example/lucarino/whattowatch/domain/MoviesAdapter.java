@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.lucarino.whattowatch.MoviesApplication;
+import com.example.lucarino.whattowatch.application.MoviesApplication;
 import com.example.lucarino.whattowatch.R;
 import com.example.lucarino.whattowatch.data.Movies;
 import com.example.lucarino.whattowatch.data.Result;

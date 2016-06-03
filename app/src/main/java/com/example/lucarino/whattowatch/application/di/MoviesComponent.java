@@ -1,6 +1,5 @@
-package com.example.lucarino.whattowatch.daggercomponent;
+package com.example.lucarino.whattowatch.application.di;
 
-import com.example.lucarino.whattowatch.daggermodule.MoviesModule;
 import com.example.lucarino.whattowatch.movies.MoviesContract;
 import com.example.lucarino.whattowatch.movies.MoviesInteractor;
 

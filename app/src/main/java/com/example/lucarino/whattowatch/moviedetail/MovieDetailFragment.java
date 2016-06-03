@@ -96,7 +96,7 @@ public class MovieDetailFragment extends Fragment implements MovieDetailContract
     public void loadMovieDetail(Result movie) {
 
         textViewOriginalTitle.setText(movie.getTitle());
-        textViewReleaseDate.setText(movie.getReleaseDate().substring(0, movie.getReleaseDate().indexOf("-")));
+        textViewReleaseDate.setText(movie.getReleaseDate());
         textViewSynopsis.setText(movie.getOverview());
 
         String image_path = API_IMAGE_PATH + movie.getPosterPath();

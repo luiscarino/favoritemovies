@@ -1,22 +1,23 @@
 package com.example.lucarino.whattowatch.moviedetail;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.lucarino.whattowatch.R;
+import com.example.lucarino.whattowatch.common.BaseActivity;
 import com.example.lucarino.whattowatch.data.Result;
 
-public class MovieDetailActivity extends AppCompatActivity {
+import rx.Subscriber;
+
+public class MovieDetailActivity extends BaseActivity {
 
     private static final String KEY_MOVIE_CLICKED = "movie.selected";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_movie_detail);
 
         Intent mIntent = getIntent();
 
@@ -25,11 +26,14 @@ public class MovieDetailActivity extends AppCompatActivity {
             Result result = (Result) mIntent.getSerializableExtra(KEY_MOVIE_CLICKED);
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_detail_container, MovieDetailFragment.newInstance(result))
+                    .replace(R.id.main_container, MovieDetailFragment.newInstance(result))
                     .commit();
         }
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -45,11 +49,28 @@ public class MovieDetailActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        // noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    protected Subscriber<? super Object> getSubscriber() {
+        return new Subscriber<Object>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(Object o) {
+
+            }
+        };
     }
 }

@@ -12,7 +12,7 @@ import android.test.AndroidTestCase;
 
 import com.example.lucarino.whattowatch.data.FavMoviesContract;
 import com.example.lucarino.whattowatch.data.FavMoviesDbHelper;
-import com.example.lucarino.whattowatch.util.FavMoviesProvider;
+import com.example.lucarino.whattowatch.domain.FavMoviesProvider;
 
 import static com.example.lucarino.whattowatch.data.FavMoviesContract.MovieEntry;
 
@@ -89,10 +89,16 @@ public class ContentProviderTest extends AndroidTestCase {
         long weatherRowId = db.insert(MovieEntry.TABLE_NAME, null, testValues);
         assertTrue("Unable to Insert WeatherEntry into the Database", weatherRowId != -1);
 
-        db.close();
+
+
+        Cursor moviesCursor = mContext.getContentResolver().query(MovieEntry.buildMoviesUriForSorted("vote_average"),
+                null,
+                null,
+                null,
+                null);
 
         // Test the basic content provider query
-        Cursor weatherCursor = mContext.getContentResolver().query(
+         moviesCursor = mContext.getContentResolver().query(
                 MovieEntry.CONTENT_URI,
                 null,
                 null,
@@ -100,9 +106,14 @@ public class ContentProviderTest extends AndroidTestCase {
                 null
         );
 
-        // Make sure we get the correct cursor out of the database
-        TestUtilities.validateCursor("testBasicWeatherQuery", weatherCursor, testValues);
+
+
+        db.close();
+
     }
+
+
+
 
     // Make sure we can still delete after adding/updating stuff
     //

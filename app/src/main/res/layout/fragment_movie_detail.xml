@@ -9,22 +9,18 @@
         android:orientation="vertical"
         tools:context=".moviedetail.MovieDetailFragment">
 
-        <RelativeLayout
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="100dp">
 
-            <TextView
-                android:id="@+id/textViewTitle"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/accent_material_light"
-                android:gravity="center_vertical"
-                android:paddingLeft="10dp"
-                android:text="Original Title"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@color/white_font_banner" />
-        </RelativeLayout>
+        <TextView
+            android:id="@+id/textViewTitle"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@color/color_primary_dark"
+            android:gravity="center_vertical"
+            android:padding="25dp"
+            android:textColor="@color/white_font_banner"
+            android:textSize="28sp"
+            tools:text="Original Title" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,11 +31,10 @@
             <ImageView
                 android:id="@+id/imageViewPoster"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/imageView"
+                android:layout_height="200dp"
                 android:layout_weight="1"
+                android:paddingLeft="25dp"
+                android:paddingStart="25dp"
                 android:src="@mipmap/ic_launcher" />
 
             <LinearLayout
@@ -73,16 +68,15 @@
 
 
                 <Button
-                    android:id="@+id/button"
+                    android:id="@+id/btn_mark_favorite"
                     android:layout_width="100dp"
+                    android:layout_marginTop="16dp"
                     android:layout_height="wrap_content"
-                    android:background="@color/accent_material_light"
                     android:text="MARK AS FAVORITE"
                     android:textColor="@color/white_font_banner" />
 
 
             </LinearLayout>
-
 
         </LinearLayout>
 
@@ -90,7 +84,7 @@
             android:id="@+id/textViewSynopsis"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
+            android:padding="16dp"
             android:text="Synopsis"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 

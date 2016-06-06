@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 
 import com.example.lucarino.whattowatch.data.FavMoviesContract;
+import com.example.lucarino.whattowatch.util.PollingCheck;
 
 import java.util.Map;
 import java.util.Set;

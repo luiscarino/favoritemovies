@@ -96,7 +96,7 @@ public class MovieDetailFragment extends Fragment implements MovieDetailContract
     public void loadMovieDetail(Result movie) {
 
         textViewOriginalTitle.setText(movie.getTitle());
-        textViewReleaseDate.setText(movie.getReleaseDate());
+        textViewReleaseDate.setText(movie.getReleaseDate().substring(0, movie.getReleaseDate().indexOf("-")));
         textViewSynopsis.setText(movie.getOverview());
 
         String image_path = API_IMAGE_PATH + movie.getPosterPath();
@@ -106,16 +106,7 @@ public class MovieDetailFragment extends Fragment implements MovieDetailContract
                 .load(image_path)
                 .into(imageViewPoster);
 
-        ratingTextView.setText(movie.getVoteAverage() + "/10");
+        ratingTextView.setText(getString(R.string.format_vote_average,movie.getVoteAverage()));
     }
-
-    // El fragment recibe el id de la pelicula
-    // El fragment le pasa el url de la prelicula al presenter
-    // El presenter utiliza el ID y le dice al interactor que vaya al servidory traiga la informacion de la pelicula
-    // El presenter actualiza el UI mostrando la barra de progreso
-    // El interactor consulta el servidor con el ID en el background
-    // El interactor lanza un callback informando el estado de la respuesta
-    // El preseter maneja la respuesta entregada por el callback
-    // El presenter actualiza la vista basado en la respuesta
 
 }

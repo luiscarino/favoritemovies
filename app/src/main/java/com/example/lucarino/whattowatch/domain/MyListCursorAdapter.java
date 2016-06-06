@@ -76,7 +76,7 @@ public class MyListCursorAdapter extends CursorRecyclerViewAdapter<MyListCursorA
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, Cursor cursor) {
 
-        Result movie = new Result(cursor.getInt(1), cursor.getString(2), cursor.getDouble(5), cursor.getString(2), cursor.getString(7), cursor.getDouble(6), cursor.getString(3));
+        Result movie = new Result(cursor.getInt(1), cursor.getString(2),  cursor.getString(3), cursor.getDouble(5), cursor.getString(7), cursor.getDouble(6), cursor.getString(4));
         viewHolder.movie = movie;
 
         String image_path = API_IMAGE_PATH + movie.getPosterPath();

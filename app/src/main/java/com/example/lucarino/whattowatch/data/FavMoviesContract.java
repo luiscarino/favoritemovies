@@ -68,6 +68,10 @@ public class FavMoviesContract {
                 return uri.getPathSegments().get(1);
             }
 
+            public static Uri buildMoviesUriForSorted(String filter) {
+                return CONTENT_URI.buildUpon().appendPath(filter).build();
+            }
+
 
         }
 }

@@ -1,4 +1,4 @@
-package com.example.lucarino.whattowatch;
+package com.example.lucarino.whattowatch.util;
 
 import junit.framework.Assert;
 

@@ -1,4 +1,4 @@
-package com.example.lucarino.whattowatch.util;
+package com.example.lucarino.whattowatch.domain;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
@@ -23,6 +23,7 @@ public class FavMoviesProvider extends ContentProvider {
 
     public static final int MOVIES = 100;
     public static final int MOVIE_WITH_ID = 101;
+    public static final int MOVIES_SORTED_BY = 102;
 
     //movies.key = ?
     private static final String mSelectedMovieSelection =
@@ -49,6 +50,24 @@ public class FavMoviesProvider extends ContentProvider {
                 null,
                 sortOrder
         );
+
+
+    }
+
+
+    private Cursor getMoviesBySortOrder(Uri uri, String selection, String[] selectionArgs, String[] projection, String sortOrder) {
+
+        String sort = FavMoviesContract.MovieEntry.getMovieIdUri(uri);
+        String sortOder = sort+" DESC";
+        return mOpenHelper.getWritableDatabase().query(
+                FavMoviesContract.MovieEntry.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                sortOder
+        );
     }
 
     @Override
@@ -65,7 +84,7 @@ public class FavMoviesProvider extends ContentProvider {
         Cursor retCursor;
         switch (sUriMatcher.match(uri)) {
 
-            // "weather/*"
+            // "movie/*"
             case MOVIE_WITH_ID: {
                 retCursor = getMovieById(uri, projection, sortOrder);
                 break;
@@ -81,6 +100,11 @@ public class FavMoviesProvider extends ContentProvider {
                         null,
                         sortOrder,
                         null);
+                break;
+            }
+            // "movies sorted by"
+            case MOVIES_SORTED_BY: {
+                retCursor = getMoviesBySortOrder(uri, selection, selectionArgs, projection, sortOrder);
                 break;
             }
             default:
@@ -103,6 +127,8 @@ public class FavMoviesProvider extends ContentProvider {
                 return FavMoviesContract.MovieEntry.CONTENT_TYPE;
             case MOVIE_WITH_ID:
                 return FavMoviesContract.MovieEntry.CONTENT_ITEM_TYPE;
+            case MOVIES_SORTED_BY:
+                return FavMoviesContract.MovieEntry.CONTENT_TYPE;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
@@ -181,9 +207,11 @@ public class FavMoviesProvider extends ContentProvider {
         UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
         // 2) Use the addURI function to match each of the types.  Use the constants from
-        // WeatherContract to help define the types to the UriMatcher.
+        // MoviesContract to help define the types to the UriMatcher.
         uriMatcher.addURI(FavMoviesContract.CONTENT_AUTHORITY, FavMoviesContract.PATH_MOVIES, MOVIES);
-        uriMatcher.addURI(FavMoviesContract.CONTENT_AUTHORITY, FavMoviesContract.PATH_MOVIES + "/#", MOVIE_WITH_ID);
+        uriMatcher.addURI(FavMoviesContract.CONTENT_AUTHORITY, FavMoviesContract.PATH_MOVIES + "/*", MOVIES_SORTED_BY);
+       // uriMatcher.addURI(FavMoviesContract.CONTENT_AUTHORITY, FavMoviesContract.PATH_MOVIES + "/#", MOVIE_WITH_ID);
+
 
         // 3) Return the new matcher!
         return uriMatcher;

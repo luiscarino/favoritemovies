@@ -1,5 +1,6 @@
 package com.example.lucarino.whattowatch.application.di;
 
+import com.example.lucarino.whattowatch.common.reactive.MainBus;
 import com.example.lucarino.whattowatch.movies.MoviesContract;
 import com.example.lucarino.whattowatch.movies.MoviesInteractor;
 
@@ -29,6 +30,13 @@ public class MoviesModule {
     @Provides
     public MoviesContract.Interactor providesMoviesContractInteractor(){
         return new MoviesInteractor();
+    }
+
+
+    @Singleton
+    @Provides
+    public MainBus provideBus() {
+        return new MainBus();
     }
 
 }

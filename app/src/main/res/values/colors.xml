@@ -3,8 +3,8 @@
     <item name="white_font_banner" type="color">#ffffff</item>
     <item name="black_bg_posters" type="color">#000000</item>
     <item name="red_banner" type="color">#c62828</item>
-    <color name="primary_material_dark">#f44336</color>
-    <color name="primary_dark_material_dark">#d32f2f</color>
-    <color name="accent_material_light">#000000</color>
-    <color name="background_material_light">#d32f2f</color>
+
+    <color name="color_primary">#F44336</color>
+    <color name="color_primary_dark">#D32F2F</color>
+    <color name="color_accent">#FF9800</color>
 </resources>

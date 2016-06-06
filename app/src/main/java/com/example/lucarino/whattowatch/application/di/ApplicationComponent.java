@@ -3,6 +3,8 @@ package com.example.lucarino.whattowatch.application.di;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.lucarino.whattowatch.common.BaseActivity;
+import com.example.lucarino.whattowatch.common.BaseFragment;
 import com.example.lucarino.whattowatch.domain.MoviesAdapter;
 import com.example.lucarino.whattowatch.movies.MoviesPresenter;
 
@@ -38,6 +40,8 @@ import dagger.Component;
 public interface ApplicationComponent {
 
     // Define functions to inject explicit types with dependencies.
+    void inject(BaseActivity baseActivity);
+    void inject(BaseFragment baseFragment);
     void inject(MoviesAdapter moviesAdapter);
     void inject(MoviesPresenter moviesPresenter);
 

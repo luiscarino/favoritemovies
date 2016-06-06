@@ -4,14 +4,16 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.lucarino.whattowatch.R;
+import com.example.lucarino.whattowatch.common.BaseFragment;
+import com.example.lucarino.whattowatch.common.event.FilterAppliedEvent;
 import com.example.lucarino.whattowatch.data.FavMoviesContract;
 import com.example.lucarino.whattowatch.data.Movies;
 import com.example.lucarino.whattowatch.data.Result;
@@ -24,11 +26,12 @@ import java.util.Vector;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.Subscriber;
 
 /**
  * Displays a grid of movies {@link Result}.
  */
-public class MoviesFragment extends Fragment implements MoviesContract.View {
+public class MoviesFragment extends BaseFragment implements MoviesContract.View {
     // b5c017a3b95c06a7e161e9b9ccd68aeb
     private MoviesContract.UserActionListener mActionsListener;
     public static final String KEY_MOVIE_CLIKED = "movie.selected";
@@ -49,15 +52,16 @@ public class MoviesFragment extends Fragment implements MoviesContract.View {
         super.onCreate(savedInstanceState);
 
         // Set up grid adapter with an empty result and a click listener for movie items
-       // mAdapter = new MoviesAdapter(new Movies(new ArrayList<Result>()), mItemClickListener);
+        // mAdapter = new MoviesAdapter(new Movies(new ArrayList<Result>()), mItemClickListener);
     }
 
     private boolean firstTime = true;
+
     @Override
     public void onResume() {
         super.onResume();
         // FIXME Check if one resume has been called before to just load the first movie pages the vey first time, I shouldn't be doing that.
-        if(firstTime){
+        if (firstTime) {
             // Call the presenter to load movies
             mActionsListener.loadMoreMovies(1);
             firstTime = false;
@@ -146,7 +150,7 @@ public class MoviesFragment extends Fragment implements MoviesContract.View {
 
         // insert data to the db // TODO: this should be done in the interactor, using DI inject the context in the interactor
         Vector<ContentValues> cVVector = new Vector<>(movies.size());
-        for(Result result : movies) {
+        for (Result result : movies) {
             ContentValues movieValues = new ContentValues();
 
             movieValues.put(FavMoviesContract.MovieEntry.COLUMN_KEY, result.getId());
@@ -162,7 +166,7 @@ public class MoviesFragment extends Fragment implements MoviesContract.View {
         }
 
         // add to database
-        if ( cVVector.size() > 0 ) {
+        if (cVVector.size() > 0) {
             ContentValues[] cvArray = new ContentValues[cVVector.size()];
             cVVector.toArray(cvArray);
             getContext().getContentResolver().bulkInsert(FavMoviesContract.MovieEntry.CONTENT_URI, cvArray);
@@ -190,4 +194,39 @@ public class MoviesFragment extends Fragment implements MoviesContract.View {
             startActivity(mIntent);
         }
     };
+
+    // main bus subscriber.
+    @Override
+    protected Subscriber<? super Object> getSubscriber() {
+        return new Subscriber<Object>() {
+            @Override
+            public void onCompleted() {
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.e(getClass().getSimpleName(), "subscriber OnError", e);
+            }
+
+            @Override
+            public void onNext(Object o) {
+                if (o instanceof FilterAppliedEvent) {
+                    FilterAppliedEvent event = (FilterAppliedEvent) o;
+                    String filter = event.getFilter();
+
+                    Cursor cursor = getContext().getContentResolver().query(
+                            FavMoviesContract.MovieEntry.buildMoviesUriForSorted(filter),
+                            null,
+                            null,
+                            null,
+                            null
+                    );
+
+                    myListCursorAdapter.changeCursor(cursor);
+
+                }
+
+            }
+        };
+    }
 }

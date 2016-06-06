@@ -22,5 +22,6 @@
     <string name="format_vote_average">
          <xliff:g id="value">%1.1f</xliff:g> / 10
     </string>
+    <string name="accessibility_desc_movie_poster_image">Movie poster image</string>
 
 </resources>

@@ -5,20 +5,19 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         tools:context=".moviedetail.MovieDetailFragment">
-
-
+        
         <TextView
             android:id="@+id/textViewTitle"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="@dimen/detail_title_height"
             android:background="@color/color_primary_dark"
             android:gravity="center_vertical"
-            android:padding="25dp"
+            android:padding="@dimen/detail_title_padding"
             android:textColor="@color/white_font_banner"
-            android:textSize="28sp"
+            android:textSize="@dimen/detail_title_text_size"
             tools:text="Original Title" />
 
 
@@ -31,10 +30,13 @@
             <ImageView
                 android:id="@+id/imageViewPoster"
                 android:layout_width="0dp"
-                android:layout_height="200dp"
+                android:layout_height="@dimen/detail_image_height"
                 android:layout_weight="1"
-                android:paddingLeft="25dp"
-                android:paddingStart="25dp"
+                android:contentDescription="@string/accessibility_desc_movie_poster_image"
+                android:paddingEnd="0dp"
+                android:paddingLeft="@dimen/detail_image_padding_left"
+                android:paddingRight="0dp"
+                android:paddingStart="@dimen/detail_image_padding_left"
                 android:src="@mipmap/ic_launcher" />
 
             <LinearLayout
@@ -49,31 +51,31 @@
                     android:id="@+id/textViewRelaseDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2015"
-                    android:textAppearance="?android:attr/textAppearanceLarge" />
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    tools:text="2015" />
 
                 <TextView
                     android:id="@+id/duration_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="120 min"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    tools:text="120 min" />
 
                 <TextView
                     android:id="@+id/rating_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="8.5/10 min"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    tools:text="8.5/10 min" />
 
 
                 <Button
                     android:id="@+id/btn_mark_favorite"
                     android:layout_width="100dp"
-                    android:layout_marginTop="16dp"
                     android:layout_height="wrap_content"
-                    android:text="MARK AS FAVORITE"
-                    android:textColor="@color/white_font_banner" />
+                    android:layout_marginTop="16dp"
+                    android:textColor="@color/white_font_banner"
+                    tools:text="MARK AS FAVORITE" />
 
 
             </LinearLayout>
@@ -85,8 +87,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:text="Synopsis"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            tools:text="Synopsis" />
 
 
     </LinearLayout>

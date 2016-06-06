@@ -1,5 +1,6 @@
 package com.example.lucarino.whattowatch.movies;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -8,11 +9,18 @@ import android.view.MenuItem;
 import com.example.lucarino.whattowatch.R;
 import com.example.lucarino.whattowatch.common.BaseActivity;
 import com.example.lucarino.whattowatch.common.event.FilterAppliedEvent;
+import com.example.lucarino.whattowatch.common.event.MovieSelectedEvent;
+import com.example.lucarino.whattowatch.moviedetail.MovieDetailActivity;
+import com.example.lucarino.whattowatch.moviedetail.MovieDetailFragment;
 
 import rx.Subscriber;
 
+import static com.example.lucarino.whattowatch.movies.MoviesFragment.KEY_MOVIE_CLIKED;
+
 
 public class MoviesActivity extends BaseActivity {
+
+    private boolean mTwoPane;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +30,21 @@ public class MoviesActivity extends BaseActivity {
                 .beginTransaction()
                 .replace(R.id.main_container, new MoviesFragment())
                 .commit();
+
+
+        if (findViewById(R.id.movie_detail_container) != null) {
+            mTwoPane = true;
+
+            if (savedInstanceState == null) {
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.movie_detail_container, new MovieDetailFragment())
+                        .commit();
+            }
+        } else {
+            mTwoPane = false;
+
+        }
 
 
     }
@@ -78,10 +101,24 @@ public class MoviesActivity extends BaseActivity {
 
             @Override
             public void onNext(Object o) {
-//                if (o instanceof FilterAppliedEvent) {
-//                    FilterAppliedEvent event = (FilterAppliedEvent) o;
-//                    Toast.makeText(getApplicationContext(), "FILTER APPLIED", Toast.LENGTH_SHORT).show();
-//                }
+
+                if(o instanceof MovieSelectedEvent) {
+                    MovieSelectedEvent event = (MovieSelectedEvent) o;
+
+                    if(mTwoPane) {
+
+                        getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.movie_detail_container, MovieDetailFragment.newInstance(event.getmMovie()))
+                                .commit();
+
+                    } else {
+                        Intent mIntent = new Intent(getApplicationContext(), MovieDetailActivity.class);
+                        mIntent.putExtra(KEY_MOVIE_CLIKED, event.getmMovie());
+                        startActivity(mIntent);
+                    }
+
+                }
 
             }
         };

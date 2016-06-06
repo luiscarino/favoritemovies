@@ -23,5 +23,7 @@
          <xliff:g id="value">%1.1f</xliff:g> / 10
     </string>
     <string name="accessibility_desc_movie_poster_image">Movie poster image</string>
+    <string name="mark_as_favorite">MARK AS FAVORITE</string>
+    <string name="accessibility_desc_mark_as_fav">Make favorite</string>
 
 </resources>

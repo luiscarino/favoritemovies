@@ -7,17 +7,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.example.lucarino.whattowatch.application.MoviesApplication;
 import com.example.lucarino.whattowatch.R;
+import com.example.lucarino.whattowatch.application.MoviesApplication;
 import com.example.lucarino.whattowatch.data.Movies;
 import com.example.lucarino.whattowatch.data.Result;
 import com.example.lucarino.whattowatch.movies.MoviesFragment;
 import com.example.lucarino.whattowatch.util.Logger;
 import com.squareup.picasso.Picasso;
 
-import java.text.DecimalFormat;
 import java.util.Collections;
 import java.util.List;
 
@@ -96,8 +94,6 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
         @Bind(R.id.imageViewPoster)
         ImageView mImageViewPoster;
         Result movie;
-        @Bind(R.id.tv_user_vote)
-        TextView tvUserVote;
         @Bind(R.id.iv_favorite)
         ImageView ivFavorite;
 
@@ -141,9 +137,6 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
                 .load(image_path)
                 .fit()
                 .into(viewHolder.mImageViewPoster);
-
-        viewHolder.tvUserVote.setText(String.format(context.getString(R.string.vote_placeholder),
-                DecimalFormat.getInstance().format(movie.getVoteAverage())));
 
     }
 

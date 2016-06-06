@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="@color/black_bg_posters">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/imageViewPoster"
-        android:layout_width="200dp"
-        android:layout_height="275dp"
+        android:contentDescription="@string/accessibility_desc_movie_poster_image"
+        android:layout_width="@dimen/movie_item_image_width"
+        android:layout_height="@dimen/movie_item_image_height"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:src="@mipmap/ic_launcher" />
+         />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/movie_item_bottom_banner_height"
         android:layout_alignBottom="@+id/imageViewPoster"
         android:layout_alignEnd="@+id/imageViewPoster"
         android:layout_alignParentLeft="true"
@@ -22,24 +22,17 @@
         android:layout_alignRight="@+id/imageViewPoster"
         android:alpha=".8"
         android:background="@color/color_primary"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="1">
 
-        <TextView
-            android:id="@+id/tv_user_vote"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:gravity="center"
-            android:text="9.9"
-            android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
 
         <ImageView
             android:id="@+id/iv_favorite"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:layout_weight="1"
-            android:src="@drawable/abc_btn_rating_star_off_mtrl_alpha" />
+            android:padding="5dp"
+            android:src="@drawable/heart_outline"
+            android:contentDescription="@string/accessibility_desc_mark_as_fav" />
 
 
     </LinearLayout>

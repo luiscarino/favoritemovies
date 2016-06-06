@@ -8,14 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.lucarino.whattowatch.R;
 import com.example.lucarino.whattowatch.data.Result;
 import com.example.lucarino.whattowatch.util.Logger;
 import com.squareup.picasso.Picasso;
-
-import java.text.DecimalFormat;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -40,8 +37,6 @@ public class MyListCursorAdapter extends CursorRecyclerViewAdapter<MyListCursorA
         @Bind(R.id.imageViewPoster)
         ImageView mImageViewPoster;
         Result movie;
-        @Bind(R.id.tv_user_vote)
-        TextView tvUserVote;
         @Bind(R.id.iv_favorite)
         ImageView ivFavorite;
 
@@ -84,9 +79,6 @@ public class MyListCursorAdapter extends CursorRecyclerViewAdapter<MyListCursorA
                 .load(image_path)
                 .fit()
                 .into(viewHolder.mImageViewPoster);
-
-        viewHolder.tvUserVote.setText(String.format(mContext.getString(R.string.vote_placeholder),
-                DecimalFormat.getInstance().format(movie.getVoteAverage())));
 
     }
 

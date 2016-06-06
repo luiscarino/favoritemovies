@@ -8,7 +8,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         tools:context=".moviedetail.MovieDetailFragment">
-        
+
         <TextView
             android:id="@+id/textViewTitle"
             android:layout_width="match_parent"
@@ -68,15 +68,13 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     tools:text="8.5/10 min" />
 
-
                 <Button
                     android:id="@+id/btn_mark_favorite"
-                    android:layout_width="100dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:textColor="@color/white_font_banner"
-                    tools:text="MARK AS FAVORITE" />
-
+                    android:text="@string/mark_as_favorite"
+                    android:textColor="@color/white_font_banner" />
 
             </LinearLayout>
 

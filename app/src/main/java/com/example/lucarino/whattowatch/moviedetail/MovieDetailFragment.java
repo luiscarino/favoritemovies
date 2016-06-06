@@ -89,7 +89,8 @@ public class MovieDetailFragment extends Fragment implements MovieDetailContract
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        loadMovieDetail(mMovieResult);
+
+        if(mMovieResult != null) loadMovieDetail(mMovieResult);
     }
 
     @Override

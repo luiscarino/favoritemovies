@@ -1,7 +1,6 @@
 package com.example.lucarino.whattowatch.movies;
 
 import android.content.ContentValues;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -14,12 +13,12 @@ import android.view.ViewGroup;
 import com.example.lucarino.whattowatch.R;
 import com.example.lucarino.whattowatch.common.BaseFragment;
 import com.example.lucarino.whattowatch.common.event.FilterAppliedEvent;
+import com.example.lucarino.whattowatch.common.event.MovieSelectedEvent;
 import com.example.lucarino.whattowatch.data.FavMoviesContract;
 import com.example.lucarino.whattowatch.data.Movies;
 import com.example.lucarino.whattowatch.data.Result;
 import com.example.lucarino.whattowatch.domain.EndlessScrollListener;
 import com.example.lucarino.whattowatch.domain.MyListCursorAdapter;
-import com.example.lucarino.whattowatch.moviedetail.MovieDetailActivity;
 
 import java.util.List;
 import java.util.Vector;
@@ -100,7 +99,7 @@ public class MoviesFragment extends BaseFragment implements MoviesContract.View 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), NUM_COLUMNS);
         mRecyclerView.setLayoutManager(gridLayoutManager);
 
-        // Test the basic content provider query
+        // Attempt to retrieve  cached data
         Cursor weatherCursor = getContext().getContentResolver().query(
                 FavMoviesContract.MovieEntry.CONTENT_URI,
                 null,
@@ -189,9 +188,10 @@ public class MoviesFragment extends BaseFragment implements MoviesContract.View 
     private MyListCursorAdapter.OnItemClickListener mItemClickListener = new MyListCursorAdapter.OnItemClickListener() {
         @Override
         public void onClick(Result movie) {
-            Intent mIntent = new Intent(getContext(), MovieDetailActivity.class);
-            mIntent.putExtra(KEY_MOVIE_CLIKED, movie);
-            startActivity(mIntent);
+
+            MovieSelectedEvent event = new MovieSelectedEvent(movie);
+            mBus.post(event);
+            
         }
     };
 

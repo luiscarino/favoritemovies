@@ -179,10 +179,16 @@ public class FavMoviesProvider extends ContentProvider {
                 int returnCount = 0;
                 try {
                     for (ContentValues value : values) {
-                        long _id = db.insert(FavMoviesContract.MovieEntry.TABLE_NAME, null, value);
-                        if (_id != -1) {
-                            returnCount++;
+                        // FIXME: more elegant fashion
+                        String id = value.getAsString("id");
+                        Cursor cursor = db.rawQuery("select * from movies where id = ?", new String[] {id+""});
+                        if(!cursor.moveToFirst()) {
+                            long _id = db.insert(FavMoviesContract.MovieEntry.TABLE_NAME, null, value);
+                            if (_id != -1) {
+                                returnCount++;
+                            }
                         }
+                        cursor.close();
                     }
                     db.setTransactionSuccessful();
                 } finally {

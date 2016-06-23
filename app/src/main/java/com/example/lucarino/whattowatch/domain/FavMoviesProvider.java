@@ -24,6 +24,7 @@ public class FavMoviesProvider extends ContentProvider {
     public static final int MOVIES = 100;
     public static final int MOVIE_WITH_ID = 101;
     public static final int MOVIES_SORTED_BY = 102;
+    public static final int SET_MOVIE_AS_FAVORITE = 103;
 
     //movies.key = ?
     private static final String mSelectedMovieSelection =
@@ -68,6 +69,13 @@ public class FavMoviesProvider extends ContentProvider {
                 null,
                 sortOder
         );
+    }
+
+    private int setMovieAsFavorite(Uri uri, ContentValues values) {
+        String movieId = FavMoviesContract.MovieEntry.getMovieIdFromFavUri(uri);
+
+        return mOpenHelper.getWritableDatabase().update(
+                FavMoviesContract.MovieEntry.TABLE_NAME, values, "id=" + movieId, null);
     }
 
     @Override
@@ -165,8 +173,16 @@ public class FavMoviesProvider extends ContentProvider {
 
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        // TODO : implement me
-        return 0;
+        int retCount;
+        switch (sUriMatcher.match(uri)) {
+            case SET_MOVIE_AS_FAVORITE :
+                retCount = setMovieAsFavorite(uri, values);
+                break;
+            default:
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
+        }
+
+        return retCount;
     }
 
     @Override
@@ -214,8 +230,9 @@ public class FavMoviesProvider extends ContentProvider {
 
         // 2) Use the addURI function to match each of the types.  Use the constants from
         // MoviesContract to help define the types to the UriMatcher.
-        uriMatcher.addURI(FavMoviesContract.CONTENT_AUTHORITY, FavMoviesContract.PATH_MOVIES, MOVIES);
+        uriMatcher.addURI(FavMoviesContract.CONTENT_AUTHORITY, FavMoviesContract.PATH_MOVIES + "/*/*", SET_MOVIE_AS_FAVORITE);
         uriMatcher.addURI(FavMoviesContract.CONTENT_AUTHORITY, FavMoviesContract.PATH_MOVIES + "/*", MOVIES_SORTED_BY);
+        uriMatcher.addURI(FavMoviesContract.CONTENT_AUTHORITY, FavMoviesContract.PATH_MOVIES, MOVIES);
        // uriMatcher.addURI(FavMoviesContract.CONTENT_AUTHORITY, FavMoviesContract.PATH_MOVIES + "/#", MOVIE_WITH_ID);
 
 

@@ -13,4 +13,12 @@
         <item name="android:src">@drawable/filter_unselected_icon_vector</item>
     </style>
 
+
+
+    <style name="toggleButton"  >
+        <item name="android:background">@drawable/heart_ic_toggle</item>
+        <item name="android:textOn"></item>
+        <item name="android:textOff"></item>
+    </style>
+
 </resources>

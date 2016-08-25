@@ -147,7 +147,7 @@ public class MoviesFragment extends BaseFragment implements MoviesContract.View 
     @Override
     public void addMoviePage(List<Result> movies) {
 
-        // insert data to the db // TODO: this should be done in the interactor, using DI inject the context in the interactor
+        // insert data to the db // TODO: move this code from the fragment
         Vector<ContentValues> cVVector = new Vector<>(movies.size());
         for (Result result : movies) {
             ContentValues movieValues = new ContentValues();
@@ -196,6 +196,7 @@ public class MoviesFragment extends BaseFragment implements MoviesContract.View 
     };
 
     // main bus subscriber.
+    // TODO: move this to presenter
     @Override
     protected Subscriber<? super Object> getSubscriber() {
         return new Subscriber<Object>() {

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ToggleButton;
 
 import com.example.lucarino.whattowatch.R;
 import com.example.lucarino.whattowatch.application.MoviesApplication;
@@ -95,12 +96,12 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
         ImageView mImageViewPoster;
         Result movie;
         @Bind(R.id.iv_favorite)
-        ImageView ivFavorite;
+        ToggleButton ivFavorite;
 
         public ViewHolder(View v) {
             super(v);
             ButterKnife.bind(this, v);
-            v.setOnClickListener(this);
+            mImageViewPoster.setOnClickListener(this);
         }
 
         @Override

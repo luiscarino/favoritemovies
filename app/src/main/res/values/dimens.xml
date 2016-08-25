@@ -3,11 +3,12 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="detail_title_height">130dp</dimen>
-    <dimen name="detail_title_padding">25dp</dimen>
+    <dimen name="detail_title_padding">18dp</dimen>
     <dimen name="detail_title_text_size">28sp</dimen>
     <dimen name="detail_image_height">200dp</dimen>
     <dimen name="detail_image_padding_left">25dp</dimen>
     <dimen name="movie_item_image_width">200dp</dimen>
     <dimen name="movie_item_image_height">275dp</dimen>
     <dimen name="movie_item_bottom_banner_height">40dp</dimen>
+    <dimen name="fav_detail_ic_margin">16dp</dimen>
 </resources>

@@ -1,15 +1,20 @@
 package com.example.lucarino.whattowatch.domain;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.ToggleButton;
 
 import com.example.lucarino.whattowatch.R;
+import com.example.lucarino.whattowatch.data.FavMoviesContract;
 import com.example.lucarino.whattowatch.data.Result;
 import com.example.lucarino.whattowatch.util.Logger;
 import com.squareup.picasso.Picasso;
@@ -23,7 +28,7 @@ import butterknife.ButterKnife;
 public class MyListCursorAdapter extends CursorRecyclerViewAdapter<MyListCursorAdapter.ViewHolder> {
 
     static private MyListCursorAdapter.OnItemClickListener onItemClickListener;
-    Context mContext;
+    static Context mContext;
     private final String API_IMAGE_PATH = "http://image.tmdb.org/t/p/w342/";
 
 
@@ -38,12 +43,27 @@ public class MyListCursorAdapter extends CursorRecyclerViewAdapter<MyListCursorA
         ImageView mImageViewPoster;
         Result movie;
         @Bind(R.id.iv_favorite)
-        ImageView ivFavorite;
+        ToggleButton ivFavorite;
 
         public ViewHolder(View v) {
             super(v);
             ButterKnife.bind(this, v);
             v.setOnClickListener(this);
+
+            ivFavorite.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                    Uri uri = FavMoviesContract.MovieEntry.buildFavoriteMovieUri(String.valueOf(movie.getId()));
+                    ContentValues values = new ContentValues();
+                    values.put(FavMoviesContract.MovieEntry.COLUMN_FAVORITE, isChecked);
+
+                    // update favorite movie in db.
+                    mContext.getContentResolver().update(uri, values, null, null);
+                    movie.setFavorite(isChecked);
+
+                }
+            });
         }
 
         @Override
@@ -71,7 +91,7 @@ public class MyListCursorAdapter extends CursorRecyclerViewAdapter<MyListCursorA
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, Cursor cursor) {
 
-        Result movie = new Result(cursor.getInt(1), cursor.getString(2),  cursor.getString(3), cursor.getDouble(5), cursor.getString(7), cursor.getDouble(6), cursor.getString(4));
+        Result movie = new Result(cursor.getInt(1), cursor.getString(2),  cursor.getString(3), cursor.getDouble(5), cursor.getString(7), cursor.getDouble(6), cursor.getString(4), cursor.getInt(9) != 0);
         viewHolder.movie = movie;
 
         String image_path = API_IMAGE_PATH + movie.getPosterPath();
@@ -79,6 +99,8 @@ public class MyListCursorAdapter extends CursorRecyclerViewAdapter<MyListCursorA
                 .load(image_path)
                 .fit()
                 .into(viewHolder.mImageViewPoster);
+
+        viewHolder.ivFavorite.setChecked(movie.isFavorite());
 
     }
 

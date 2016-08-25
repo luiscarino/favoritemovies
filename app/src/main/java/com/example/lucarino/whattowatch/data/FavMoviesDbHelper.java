@@ -12,7 +12,7 @@ import static com.example.lucarino.whattowatch.data.FavMoviesContract.MovieEntry
 public class FavMoviesDbHelper extends SQLiteOpenHelper {
 
     // If you change the database schema, you must increment the database version.
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 3;
 
     public static final String DATABASE_NAME = "fav.movies.db";
 
@@ -40,7 +40,8 @@ public class FavMoviesDbHelper extends SQLiteOpenHelper {
                 MovieEntry.COLUMN_VOTE_AVERAGE + " REAL NOT NULL, " +
 
                 MovieEntry.COLUMN_POSTER_PATH + " TEXT, " +
-                MovieEntry.COLUMN_VIDEO + " INTEGER)";
+                MovieEntry.COLUMN_VIDEO + " INTEGER, "+
+                MovieEntry.COLUMN_FAVORITE + " INTEGER)";
 
         sqLiteDatabase.execSQL(SQL_CREATE_MOVIES_TABLE);
 

@@ -115,6 +115,7 @@ public class MoviesActivity extends BaseActivity {
                     } else {
                         Intent mIntent = new Intent(getApplicationContext(), MovieDetailActivity.class);
                         mIntent.putExtra(KEY_MOVIE_CLIKED, event.getmMovie());
+                        mIntent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                         startActivity(mIntent);
                     }
 

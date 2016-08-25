@@ -30,6 +30,7 @@ public class FavMoviesContract {
         // At least, let's hope not.  Don't be that dev, reader.  Don't be that dev.
 
         public static final String PATH_MOVIES = "movies";
+        public static final String PATH_FAV = "favorite";
 
         /*
             Inner class that defines the table contents of the location table
@@ -58,6 +59,7 @@ public class FavMoviesContract {
             public static final String COLUMN_RELEASE_DATE = "release_date";
             public static final String COLUMN_POSTER_PATH = "poster_path";
             public static final String COLUMN_VIDEO = "video";
+            public static final String COLUMN_FAVORITE = "favorite";
 
 
             public static Uri buildMoviesUri(long id) {
@@ -72,6 +74,13 @@ public class FavMoviesContract {
                 return CONTENT_URI.buildUpon().appendPath(filter).build();
             }
 
+            public static Uri buildFavoriteMovieUri(String id) {
+                return CONTENT_URI.buildUpon().appendPath(PATH_FAV).appendPath(id).build();
+            }
+
+            public static String getMovieIdFromFavUri(Uri uri) {
+                return uri.getPathSegments().get(2);
+            }
 
         }
 }

@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.test.AndroidTestCase;
 
+import com.example.lucarino.whattowatch.data.FavMoviesContract;
 import com.example.lucarino.whattowatch.data.FavMoviesDbHelper;
 
 import java.util.HashSet;
@@ -122,6 +123,26 @@ public class DBTest extends AndroidTestCase {
 
         // Finally, close the cursor and database
         cursor.close();
+        db.close();
+
+    }
+
+    public void testFavMovieUpdate() {
+        final SQLiteDatabase db = new FavMoviesDbHelper(mContext).getWritableDatabase();
+
+        ContentValues valuesToInsert = TestUtilities.createMovieValues();
+        final long rowID = db.insert(MovieEntry.TABLE_NAME, null, valuesToInsert);
+
+        // update favorite
+        ContentValues updateValues = new ContentValues();
+        updateValues.put(FavMoviesContract.MovieEntry.COLUMN_FAVORITE, 1);
+        int updatedRowID = db.update(
+                FavMoviesContract.MovieEntry.TABLE_NAME, updateValues, "_id=" + rowID, null);
+
+        // Validate the id of the inserted row is the same that the updated record.
+        assertEquals(rowID, updatedRowID);
+
+        // Finally, close the database
         db.close();
 
     }

@@ -61,6 +61,7 @@ public class Result implements Serializable {
     @SerializedName("vote_count")
     @Expose
     private int voteCount;
+    private boolean isFavorite;
 
     public Result(int id,
                   String title,
@@ -76,6 +77,24 @@ public class Result implements Serializable {
         this.voteAverage = voteAverage;
         this.releaseDate = releaseDate;
         this.overview = overview;
+    }
+
+    public Result(int id,
+                  String title,
+                  String overview,
+                  double popularity,
+                  String posterPath,
+                  double voteAverage,
+                  String releaseDate,
+                  boolean isFavorite) {
+        this.id = id;
+        this.popularity = popularity;
+        this.title = title;
+        this.posterPath = posterPath;
+        this.voteAverage = voteAverage;
+        this.releaseDate = releaseDate;
+        this.overview = overview;
+        this.isFavorite = isFavorite;
     }
 
     /**
@@ -328,6 +347,14 @@ public class Result implements Serializable {
      */
     public void setVoteCount(int voteCount) {
         this.voteCount = voteCount;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
     }
 
     public static Comparator<Result> comparatorByPopularity = new Comparator<Result>() {

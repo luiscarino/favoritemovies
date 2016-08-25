@@ -16,12 +16,14 @@ public class TestUriMatcher extends AndroidTestCase {
 
     private static final long ID_KEY = 2343L;
     private static final String SORT_ID =  "vote_average"; //popularity
+    private static final String MOVIE_ID = "123123";
 
 
 
     private static final Uri TEST_MOVIES_DIR = FavMoviesContract.MovieEntry.CONTENT_URI;
     private static final Uri TEST_MOVIE_WITH_ID_DIR = FavMoviesContract.MovieEntry.buildMoviesUri(ID_KEY);
     private static final Uri TEST_MOVIE_WITH_FILTER = FavMoviesContract.MovieEntry.buildMoviesUriForSorted(SORT_ID);
+    private static final Uri TEST_FAVORITE_MOVIE_URI = FavMoviesContract.MovieEntry.buildFavoriteMovieUri(MOVIE_ID);
 
 
     /*
@@ -32,6 +34,8 @@ public class TestUriMatcher extends AndroidTestCase {
     public void testUriMatcher() {
         UriMatcher testMatcher = FavMoviesProvider.buildUriMatcher();
 
+        assertEquals("Error: The FAV MOVIE was matched incorrectly.",
+                testMatcher.match(TEST_FAVORITE_MOVIE_URI), FavMoviesProvider.SET_MOVIE_AS_FAVORITE);
         assertEquals("Error: The MOVIE was matched incorrectly.",
                 testMatcher.match(TEST_MOVIES_DIR), FavMoviesProvider.MOVIES);
 //        assertEquals("Error: The ,MOVIE WITH ID was matched incorrectly.",

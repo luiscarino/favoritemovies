@@ -1,14 +1,19 @@
 package com.example.lucarino.whattowatch.moviedetail;
 
+import android.content.ContentValues;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.example.lucarino.whattowatch.R;
+import com.example.lucarino.whattowatch.data.FavMoviesContract;
 import com.example.lucarino.whattowatch.data.Result;
 import com.squareup.picasso.Picasso;
 
@@ -38,6 +43,9 @@ public class MovieDetailFragment extends Fragment implements MovieDetailContract
 
     @Bind(R.id.rating_textview)
     TextView ratingTextView;
+
+    @Bind(R.id.btn_mark_favorite)
+    ToggleButton buttonFav;
 
     private Result mMovieResult;
 
@@ -90,7 +98,23 @@ public class MovieDetailFragment extends Fragment implements MovieDetailContract
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if(mMovieResult != null) loadMovieDetail(mMovieResult);
+        if (mMovieResult != null) loadMovieDetail(mMovieResult);
+
+        buttonFav.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                Uri uri = FavMoviesContract.MovieEntry.buildFavoriteMovieUri(String.valueOf(mMovieResult.getId()));
+                ContentValues values = new ContentValues();
+                values.put(FavMoviesContract.MovieEntry.COLUMN_FAVORITE, isChecked);
+
+                // update favorite movie in db.
+                getContext().getContentResolver().update(uri, values, null, null);
+
+            }
+        });
+
+        buttonFav.setChecked(mMovieResult.isFavorite());
     }
 
     @Override
@@ -107,7 +131,7 @@ public class MovieDetailFragment extends Fragment implements MovieDetailContract
                 .load(image_path)
                 .into(imageViewPoster);
 
-        ratingTextView.setText(getString(R.string.format_vote_average,movie.getVoteAverage()));
+        ratingTextView.setText(getString(R.string.format_vote_average, movie.getVoteAverage()));
     }
 
 }
